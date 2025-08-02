@@ -58,6 +58,7 @@
 // }
 
 
+
 "use client"
 
 import { Pencil, Trash } from "lucide-react"
@@ -76,13 +77,13 @@ interface TaskItemProps {
   isLast?: boolean
 }
 
-export default function TaskItem({ task, onEdit, onDelete, onToggleComplete }: TaskItemProps) {
+export default function TaskItem({ task, onEdit, onDelete, onToggleComplete, isLast }: TaskItemProps) {
   return (
     <div className="flex justify-between items-center bg-white border p-4 rounded-xl shadow-sm mb-4">
       <div className="flex items-center space-x-3">
         <input
           type="checkbox"
-          checked={task.completed}
+          checked={task.completed || false}
           onChange={() => onToggleComplete(task._id)}
           className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
         />
@@ -124,4 +125,3 @@ export default function TaskItem({ task, onEdit, onDelete, onToggleComplete }: T
     </div>
   )
 }
-
