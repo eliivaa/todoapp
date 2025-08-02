@@ -49,17 +49,13 @@
 //   }
 // }
 
-
 import { type NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/mongodb";
 import Task from "@/lib/models/Task";
 import { verifyToken } from "@/lib/auth";
 
-// DELETE Handler
-export async function DELETE(
-  request: NextRequest,
-  context: { params: { id: string } }
-) {
+
+export async function DELETE(request: NextRequest, context: any) {
   const { params } = context;
 
   try {
@@ -85,11 +81,7 @@ export async function DELETE(
   }
 }
 
-// PUT Handler
-export async function PUT(
-  request: NextRequest,
-  context: { params: { id: string } }
-) {
+export async function PUT(request: NextRequest, context: any) {
   const { params } = context;
 
   try {
