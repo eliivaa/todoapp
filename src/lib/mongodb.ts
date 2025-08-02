@@ -40,7 +40,9 @@
 // export default dbConnect
 
 
+
 import mongoose from "mongoose"
+
 
 const MONGODB_URI = process.env.MONGODB_URI!
 
@@ -57,13 +59,11 @@ declare global {
   var mongoose: MongooseCache | undefined
 }
 
-// Initialize global.mongoose if not initialized
-if (!global.mongoose) {
-  global.mongoose = { conn: null, promise: null }
+if (!globalThis.mongoose) {
+  globalThis.mongoose = { conn: null, promise: null }
 }
 
-// Now cached is definitely defined
-const cached: MongooseCache = global.mongoose!
+const cached = globalThis.mongoose
 
 async function dbConnect() {
   if (cached.conn) {
@@ -75,7 +75,7 @@ async function dbConnect() {
       bufferCommands: false,
     }
 
-    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => mongoose)
+    cached.promise = mongoose.connect(MONGODB_URI, opts) // <--- assign the promise directly, no `.then`
   }
 
   try {
