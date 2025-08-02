@@ -57,8 +57,6 @@
 //   )
 // }
 
-
-
 "use client"
 
 import { Pencil, Trash } from "lucide-react"
@@ -77,7 +75,13 @@ interface TaskItemProps {
   isLast: boolean
 }
 
-export default function TaskItem({ task, onEdit, onDelete, onToggleComplete, isLast }: TaskItemProps) {
+export default function TaskItem({
+  task,
+  onEdit,
+  onDelete,
+  onToggleComplete,
+  isLast
+}: TaskItemProps) {
   return (
     <div className="flex items-center bg-white border p-4 rounded-xl shadow-sm mb-4">
       <input
@@ -99,12 +103,11 @@ export default function TaskItem({ task, onEdit, onDelete, onToggleComplete, isL
           <p className="text-sm">
             Due:{" "}
             <span
-              className={`font-medium px-1 rounded
-        ${new Date(task.dueDate) < new Date()
-                  ? "text-red-600 bg-red-100"
-                  : new Date(task.dueDate).toDateString() === new Date().toDateString()
-                    ? "text-green-600 bg-orange-100"
-                    : "text-green-600 bg-gray-100"
+              className={`font-medium px-1 rounded ${new Date(task.dueDate) < new Date()
+                ? "text-red-600 bg-red-100"
+                : new Date(task.dueDate).toDateString() === new Date().toDateString()
+                  ? "text-green-600 bg-orange-100"
+                  : "text-green-600 bg-gray-100"
                 }`}
             >
               {new Date(task.dueDate).toLocaleDateString()}
