@@ -8,12 +8,14 @@ interface TaskItemProps {
     title: string
     tag?: string
     dueDate?: string
-    completed?: boolean  // Added optional completed flag
+    completed?: boolean
   }
   onEdit: () => void
   onDelete: () => void
   onToggleComplete: (id: string) => void
+  isLast: boolean  // Add this line
 }
+
 
 export default function TaskItem({ task, onEdit, onDelete, onToggleComplete }: TaskItemProps) {
   return (
