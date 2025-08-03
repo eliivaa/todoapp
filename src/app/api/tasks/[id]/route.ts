@@ -1,15 +1,19 @@
-//import { type NextRequest, NextResponse } from "next/server"
+import { type NextRequest, NextResponse } from "next/server"
 import dbConnect from "@/lib/mongodb"
 import Task from "@/lib/models/Task"
 import { verifyToken } from "@/lib/auth"
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(request: NextRequest) {
   try {
     await dbConnect()
     const user = verifyToken(request)
 
+    // Extract task ID from the URL
+    const url = new URL(request.url)
+    const id = url.pathname.split("/").pop()
+
     const task = await Task.findOneAndDelete({
-      _id: params.id,
+      _id: id,
       user: user.id,
     })
 
@@ -27,13 +31,17 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
   }
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest) {
   try {
     await dbConnect()
     const user = verifyToken(request)
     const body = await request.json()
 
-    const task = await Task.findOneAndUpdate({ _id: params.id, user: user.id }, body, { new: true })
+    // Extract task ID from the URL
+    const url = new URL(request.url)
+    const id = url.pathname.split("/").pop()
+
+    const task = await Task.findOneAndUpdate({ _id: id, user: user.id }, body, { new: true })
 
     if (!task) {
       return NextResponse.json({ message: "Task not found" }, { status: 404 })
